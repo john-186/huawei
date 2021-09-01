@@ -1,0 +1,17 @@
+#!/bin/bash
+#chmod 700 useradd.sh
+#./useradd.sh
+for user in `cat /root/list`;
+do
+useradd $user
+echo "123456" | passwd --stdin $user
+echo "密码写入成功"
+done
+chpasswd < /root/passwd
+pwconv
+cat /root/passwd
+
+//chpasswd < /root/passwd这句代码意思是：执行chpasswd命令：以root的身份执行/usr/sbin/chpasswd，chpasswd将经过/usr/bin/passwd命令编译过的密码写入/etc/passwd的密码栏
+pwconv命令是：确定密码经密码写入/etc/passwd的密码栏后，执行命令/usr/sbin/pwconv命令将密码编译为shadow password，并将结果写入/etc/shadow
+
+//删除只需要修一句代码，将useradd改为userdel即可。
